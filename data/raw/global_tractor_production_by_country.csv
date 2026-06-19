@@ -1,0 +1,27 @@
+country,country_code,year,tractors_produced_units,tractors_exported_units,domestic_sales_estimate,notes
+India,IN,2018,874000,82000,792000,TMA data; largest producer by volume
+India,IN,2019,735000,65000,670000,TMA data
+India,IN,2020,891000,76000,815000,TMA data
+India,IN,2021,939000,89000,850000,TMA data
+India,IN,2022,932000,92000,840000,TMA data
+India,IN,2023,918000,88000,830000,TMA data (Provisional)
+China,CN,2018,450000,62000,388000,China Tractor Association estimate
+China,CN,2019,420000,58000,362000,China Tractor Association estimate
+China,CN,2020,480000,67000,413000,China Tractor Association estimate
+China,CN,2021,510000,72000,438000,China Tractor Association estimate
+China,CN,2022,490000,68000,422000,China Tractor Association estimate
+USA,US,2018,252000,45000,207000,AEM Retail Statistics + USDA
+USA,US,2019,265000,47000,218000,AEM Retail Statistics + USDA
+USA,US,2020,280000,51000,229000,AEM Retail Statistics + USDA
+USA,US,2021,295000,54000,241000,AEM Retail Statistics + USDA
+USA,US,2022,305000,56000,249000,AEM Retail Statistics + USDA
+Germany,DE,2018,64000,58000,6000,VDMA; Germany primarily exports
+Germany,DE,2019,61000,55000,6000,VDMA
+Germany,DE,2020,58000,52000,6000,VDMA
+Germany,DE,2021,72000,65000,7000,VDMA
+Germany,DE,2022,78000,70000,8000,VDMA
+Japan,JP,2018,185000,89000,96000,JAMA; includes small tractors/tillers
+Japan,JP,2019,178000,84000,94000,JAMA
+Japan,JP,2020,172000,81000,91000,JAMA
+Japan,JP,2021,180000,87000,93000,JAMA
+Japan,JP,2022,186000,91000,95000,JAMA
