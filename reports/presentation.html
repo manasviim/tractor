@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>India Tractor Industry — Presentation</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+  :root {
+    --bg:     #0a0f1e;
+    --card:   #111827;
+    --border: #1f2937;
+    --green:  #10b981;
+    --amber:  #f59e0b;
+    --blue:   #3b82f6;
+    --purple: #8b5cf6;
+    --red:    #ef4444;
+    --gray:   #6b7280;
+    --text:   #e2e8f0;
+    --muted:  #94a3b8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #1a1a2e;
+    color: var(--text);
+    overflow: hidden;
+  }
+
+  /* ── Navigation ─────────────────────────────── */
+  .nav {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(17,24,39,0.9);
+    border: 1px solid #1f2937;
+    border-radius: 40px;
+    padding: 10px 20px;
+    z-index: 100;
+    backdrop-filter: blur(10px);
+  }
+  .nav button {
+    background: none;
+    border: none;
+    color: #94a3b8;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 4px 10px;
+    border-radius: 20px;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .nav button:hover { background: #1f2937; color: #e2e8f0; }
+  .nav-count { color: #64748b; font-size: 11pt; min-width: 60px; text-align: center; }
+
+  .slide-dots {
+    display: flex; gap: 6px;
+  }
+  .dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: #374151; cursor: pointer; transition: all 0.2s;
+  }
+  .dot.active { background: #10b981; transform: scale(1.3); }
+
+  /* ── Slide container ────────────────────────── */
+  .deck {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+  }
+
+  .slide {
+    display: none;
+    position: absolute;
+    inset: 0;
+    padding: 0;
+    animation: fadeIn 0.35s ease;
+  }
+  .slide.active { display: flex; flex-direction: column; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── Slide layouts ──────────────────────────── */
+  .slide-cover {
+    background: linear-gradient(135deg, #0a0f1e 0%, #0d1b2a 50%, #081225 100%);
+    justify-content: center;
+    padding: 80px 120px;
+    position: relative;
+    overflow: hidden;
+  }
+  .slide-cover::before {
+    content: '';
+    position: absolute;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(16,185,129,0.08), transparent 70%);
+    top: -100px; right: -100px;
+  }
+
+  .slide-body {
+    background: var(--bg);
+    padding: 48px 80px;
+    justify-content: flex-start;
+  }
+
+  .slide-split {
+    background: var(--bg);
+    flex-direction: row;
+  }
+  .split-left  { flex: 1; padding: 48px 60px; display: flex; flex-direction: column; justify-content: center; }
+  .split-right { flex: 1; padding: 48px 60px; display: flex; flex-direction: column; justify-content: center; background: #0d1117; }
+
+  /* ── Cover elements ─────────────────────────── */
+  .cover-label {
+    background: rgba(16,185,129,0.12);
+    border: 1px solid rgba(16,185,129,0.4);
+    color: var(--green);
+    font-size: 9pt;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 20px;
+    display: inline-block;
+    margin-bottom: 28px;
+  }
+  .cover-title {
+    font-size: 40pt;
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -1px;
+    color: white;
+    margin-bottom: 16px;
+  }
+  .cover-title span { color: var(--green); }
+  .cover-sub {
+    font-size: 14pt;
+    color: var(--muted);
+    font-weight: 300;
+    margin-bottom: 60px;
+  }
+  .kpi-row {
+    display: flex;
+    gap: 24px;
+  }
+  .kpi {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 10px;
+    padding: 18px 24px;
+    min-width: 140px;
+  }
+  .kpi-val  { font-size: 22pt; font-weight: 800; color: var(--green); }
+  .kpi-lbl  { font-size: 8.5pt; color: var(--muted); margin-top: 4px; }
+
+  /* ── Slide header ────────────────────────────── */
+  .slide-num {
+    font-size: 8.5pt;
+    color: var(--gray);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .slide-tag {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 3px;
+    font-size: 8pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+  }
+  .tag-desc  { background: rgba(16,185,129,0.15);  color: var(--green);  }
+  .tag-diag  { background: rgba(245,158,11,0.15);  color: var(--amber);  }
+  .tag-pred  { background: rgba(59,130,246,0.15);  color: var(--blue);   }
+  .tag-presc { background: rgba(139,92,246,0.15);  color: var(--purple); }
+  .tag-arch  { background: rgba(107,114,128,0.15); color: var(--gray);   }
+
+  h2 {
+    font-size: 22pt;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 28px;
+    line-height: 1.2;
+  }
+  h2 span { color: var(--green); }
+
+  h3 { font-size: 12pt; font-weight: 600; color: #cbd5e1; margin-bottom: 14px; }
+
+  /* ── Components ──────────────────────────────── */
+  .insight {
+    background: rgba(16,185,129,0.08);
+    border-left: 3px solid var(--green);
+    padding: 12px 16px;
+    border-radius: 0 6px 6px 0;
+    margin: 10px 0;
+    font-size: 10.5pt;
+    color: #e2e8f0;
+    line-height: 1.5;
+  }
+  .insight.amber  { background: rgba(245,158,11,0.08);  border-color: var(--amber);  }
+  .insight.blue   { background: rgba(59,130,246,0.08);  border-color: var(--blue);   }
+  .insight.purple { background: rgba(139,92,246,0.08);  border-color: var(--purple); }
+
+  .bullet-list { list-style: none; padding: 0; }
+  .bullet-list li {
+    padding: 9px 0 9px 22px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    font-size: 10.5pt;
+    color: #cbd5e1;
+    position: relative;
+    line-height: 1.4;
+  }
+  .bullet-list li::before {
+    content: '▸';
+    position: absolute; left: 0;
+    color: var(--green); font-size: 10pt;
+  }
+  .bullet-list.amber li::before { color: var(--amber); }
+  .bullet-list.blue  li::before { color: var(--blue); }
+  .bullet-list.purple li::before { color: var(--purple); }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+  .grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 14px; }
+
+  .stat-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 8px;
+    padding: 16px 18px;
+    text-align: center;
+  }
+  .stat-card .val { font-size: 20pt; font-weight: 800; }
+  .stat-card .lbl { font-size: 8.5pt; color: var(--muted); margin-top: 4px; }
+  .stat-card .sub { font-size: 9pt; font-weight: 600; margin-top: 3px; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 9.5pt;
+    margin: 12px 0;
+  }
+  thead tr { background: rgba(16,185,129,0.15); }
+  thead th { padding: 8px 11px; text-align: left; font-weight: 600; color: var(--green); font-size: 9pt; }
+  tbody tr { border-bottom: 1px solid rgba(255,255,255,0.05); }
+  tbody tr:hover { background: rgba(255,255,255,0.03); }
+  tbody td { padding: 7px 11px; color: #cbd5e1; }
+
+  .bar-wrap { margin: 8px 0; }
+  .bar-item { display: flex; align-items: center; gap: 10px; margin: 5px 0; font-size: 10pt; }
+  .bar-item .lbl  { width: 110px; color: #94a3b8; flex-shrink: 0; font-size: 9pt; }
+  .bar-item .bg   { flex: 1; background: rgba(255,255,255,0.06); border-radius: 3px; height: 16px; overflow: hidden; }
+  .bar-item .fill { height: 16px; border-radius: 3px; transition: width 0.5s ease; }
+  .bar-item .pct  { width: 38px; text-align: right; font-weight: 600; font-size: 9.5pt; }
+
+  .pipeline {
+    display: flex; align-items: center; gap: 4px; flex-wrap: wrap;
+    margin: 16px 0;
+  }
+  .pipe-box {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 6px;
+    padding: 8px 14px;
+    font-size: 9.5pt;
+    font-weight: 600;
+    color: #e2e8f0;
+  }
+  .pipe-arrow { color: var(--green); font-size: 14pt; padding: 0 4px; }
+
+  .forecast-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 12px 16px;
+    background: rgba(255,255,255,0.03);
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.06);
+    margin: 8px 0;
+  }
+  .forecast-row .yr  { font-size: 10pt; font-weight: 600; color: var(--muted); width: 70px; }
+  .forecast-row .val { font-size: 16pt; font-weight: 800; color: var(--green); }
+  .forecast-row .rng { font-size: 9pt; color: var(--muted); flex: 1; }
+  .forecast-row .chg { font-size: 10pt; font-weight: 700; color: var(--amber); }
+
+  .tag-pill {
+    display: inline-block;
+    padding: 2px 9px;
+    border-radius: 20px;
+    font-size: 8pt;
+    font-weight: 600;
+  }
+  .up   { background: rgba(16,185,129,0.15); color: var(--green); }
+  .down { background: rgba(239,68,68,0.15);  color: var(--red); }
+  .flat { background: rgba(107,114,128,0.15); color: var(--gray); }
+
+  .keyboard-hint {
+    position: fixed;
+    top: 20px;
+    right: 30px;
+    font-size: 8.5pt;
+    color: #374151;
+    z-index: 50;
+  }
+</style>
+</head>
+<body>
+
+<div class="keyboard-hint">&#x2190; &#x2192; arrow keys to navigate</div>
+
+<div class="deck" id="deck">
+
+  <!-- ═══════════════════════════════ SLIDE 1: COVER ═════════ -->
+  <div class="slide slide-cover active">
+    <div class="cover-label">Data Analytics Assessment — June 2026</div>
+    <div class="cover-title">India <span>Tractor Industry</span><br>Analytics</div>
+    <div class="cover-sub">How the Tractor Industry Works — Market Trends, Drivers, Forecasts &amp; Strategy</div>
+    <div class="kpi-row">
+      <div class="kpi"><div class="kpi-val">9.12L</div><div class="kpi-lbl">FY2024-25 Sales</div></div>
+      <div class="kpi"><div class="kpi-val">#1</div><div class="kpi-lbl">Global Volume Leader</div></div>
+      <div class="kpi"><div class="kpi-val">6.1%</div><div class="kpi-lbl">20-Year CAGR</div></div>
+      <div class="kpi"><div class="kpi-val">9.5L</div><div class="kpi-lbl">FY26 Forecast</div></div>
+    </div>
+    <div style="margin-top:50px;font-size:9pt;color:#374151;">
+      Pipeline: Databricks (Bronze / Silver / Gold) &nbsp;&rarr;&nbsp; DuckDB &nbsp;&rarr;&nbsp; Streamlit &bull; Looker Studio
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════ SLIDE 2: AGENDA ════════════ -->
+  <div class="slide slide-body">
+    <div class="slide-num">02 / 10</div>
+    <div class="slide-tag tag-arch">Agenda</div>
+    <h2>What We'll Cover</h2>
+    <div class="grid-2">
+      <div>
+        <ul class="bullet-list">
+          <li><strong>Slide 3:</strong> Architecture and Data Pipeline</li>
+          <li><strong>Slide 4:</strong> Descriptive — Market Overview</li>
+          <li><strong>Slide 5:</strong> Descriptive — HP Segments &amp; States</li>
+          <li><strong>Slide 6:</strong> Diagnostic — What Drives Demand?</li>
+          <li><strong>Slide 7:</strong> Diagnostic — Rainfall &amp; MSP Deep-dive</li>
+        </ul>
+      </div>
+      <div>
+        <ul class="bullet-list blue">
+          <li><strong>Slide 8:</strong> Predictive — Forecast FY2026-27</li>
+          <li><strong>Slide 9:</strong> Predictive — Emerging States</li>
+          <li><strong>Slide 10:</strong> Prescriptive — Recommendations</li>
+        </ul>
+        <div style="margin-top:24px;">
+          <div class="insight blue" style="font-size:9.5pt;">
+            <strong>Tools used:</strong> Databricks PySpark &bull; DuckDB SQL &bull; Holt-Winters + ARIMA &bull; Streamlit &bull; Looker Studio
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════ SLIDE 3: ARCHITECTURE ═════════ -->
+  <div class="slide slide-body">
+    <div class="slide-num">03 / 10</div>
+    <div class="slide-tag tag-arch">Architecture</div>
+    <h2>Data Pipeline &amp; <span>Tech Stack</span></h2>
+    <div class="pipeline">
+      <div class="pipe-box">TMA / IMD / FRED<br><span style="font-size:8pt;color:#6b7280;">Raw CSV + APIs</span></div>
+      <div class="pipe-arrow">&#8594;</div>
+      <div class="pipe-box">Databricks Bronze<br><span style="font-size:8pt;color:#6b7280;">Delta tables</span></div>
+      <div class="pipe-arrow">&#8594;</div>
+      <div class="pipe-box">Silver (PySpark)<br><span style="font-size:8pt;color:#6b7280;">Clean + Enrich</span></div>
+      <div class="pipe-arrow">&#8594;</div>
+      <div class="pipe-box">Gold (KPIs)<br><span style="font-size:8pt;color:#6b7280;">Analytics-ready</span></div>
+      <div class="pipe-arrow">&#8594;</div>
+      <div class="pipe-box">DuckDB + statsmodels<br><span style="font-size:8pt;color:#6b7280;">Forecasting</span></div>
+      <div class="pipe-arrow">&#8594;</div>
+      <div class="pipe-box">Streamlit + Looker<br><span style="font-size:8pt;color:#6b7280;">Dashboards</span></div>
+    </div>
+    <div class="grid-2" style="margin-top:20px;">
+      <div>
+        <h3>Gold Layer Tables</h3>
+        <table>
+          <thead><tr><th>Table</th><th>Contents</th></tr></thead>
+          <tbody>
+            <tr><td>market_summary</td><td>Annual totals by country/year</td></tr>
+            <tr><td>hp_segment_trend</td><td>HP % mix by year (India)</td></tr>
+            <tr><td>india_seasonality</td><td>Monthly share estimates</td></tr>
+            <tr><td>top_exporters</td><td>UN Comtrade HS 8701 flows</td></tr>
+            <tr><td>price_vs_sales</td><td>PPI vs demand correlation</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <h3>Data Sources</h3>
+        <ul class="bullet-list" style="font-size:9.5pt;">
+          <li>TMA — India sales FY2003-2025</li>
+          <li>IMD — SW Monsoon rainfall 2010-2024</li>
+          <li>FRED — Farm Equipment PPI, Net Farm Income</li>
+          <li>AEM — US Tractor Sales (Farm Flash May 2026)</li>
+          <li>UN Comtrade — Global HS 8701 trade flows</li>
+          <li>FAOSTAT — Arable land, India 2010-2023</li>
+          <li>CACP — Wheat MSP series 2015-2024</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════ SLIDE 4: MARKET OVERVIEW ══════ -->
+  <div class="slide slide-body">
+    <div class="slide-num">04 / 10</div>
+    <div class="slide-tag tag-desc">Descriptive Analytics</div>
+    <h2>India: World's <span>Largest</span> Tractor Market</h2>
+    <div class="grid-4" style="margin-bottom:24px;">
+      <div class="stat-card"><div class="val" style="color:var(--green);">9.12L</div><div class="lbl">FY2024-25 Sales</div><div class="sub" style="color:#6b7280;">units</div></div>
+      <div class="stat-card"><div class="val" style="color:var(--amber);">3.3x</div><div class="lbl">Growth since FY04</div><div class="sub" style="color:#10b981;">2.76L &rarr; 9.12L</div></div>
+      <div class="stat-card"><div class="val" style="color:var(--blue);">6.1%</div><div class="lbl">20-Year CAGR</div><div class="sub" style="color:#10b981;">Steady long-run growth</div></div>
+      <div class="stat-card"><div class="val" style="color:var(--purple);">~33%</div><div class="lbl">Global share</div><div class="sub" style="color:#10b981;">#1 market by volume</div></div>
+    </div>
+    <div class="grid-2">
+      <div>
+        <h3>Sales Milestones</h3>
+        <table>
+          <thead><tr><th>Fiscal Year</th><th>Sales</th><th>Event</th></tr></thead>
+          <tbody>
+            <tr><td>FY2008-09</td><td>3.17L</td><td>GFC — -13.6%</td></tr>
+            <tr><td>FY2017-18</td><td>6.93L</td><td>MSP +13.8% — +19.1%</td></tr>
+            <tr><td>FY2019-20</td><td>7.35L</td><td>NBFC crunch — -15.9%</td></tr>
+            <tr><td>FY2020-21</td><td>8.91L</td><td>Monsoon 958mm — +21.2%</td></tr>
+            <tr><td>FY2021-22</td><td>9.39L</td><td>All-time peak</td></tr>
+            <tr><td>FY2024-25</td><td>9.12L</td><td>Stable, slight plateau</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <div class="insight" style="margin-bottom:14px;">
+          <strong>Market is mature in core states (UP, Punjab) but structurally underpenetrated nationally.</strong> At 6.4 tractors/1000 ha, India lags USA (27), EU (40+), China (18).
+        </div>
+        <div class="insight amber">
+          <strong>Key risk:</strong> Two demand disruptors historically — monsoon deficit and NBFC/banking credit tightening. Both can trigger -10 to -16% declines in a single year.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════ SLIDE 5: HP + STATES ══════════ -->
+  <div class="slide slide-split">
+    <div class="split-left">
+      <div class="slide-num">05 / 10</div>
+      <div class="slide-tag tag-desc">Descriptive Analytics</div>
+      <h2>HP Segments<br>&amp; <span>State Geography</span></h2>
+      <h3>HP Segment Distribution (National)</h3>
+      <div class="bar-wrap">
+        <div class="bar-item"><div class="lbl">Below 30 HP</div><div class="bg"><div class="fill" style="width:5.2%;background:#6b7280;"></div></div><div class="pct" style="color:#6b7280;">5.2%</div></div>
+        <div class="bar-item"><div class="lbl">30-40 HP</div><div class="bg"><div class="fill" style="width:44.8%;background:#10b981;"></div></div><div class="pct" style="color:#10b981;">44.8%</div></div>
+        <div class="bar-item"><div class="lbl">41-50 HP</div><div class="bg"><div class="fill" style="width:29.6%;background:#f59e0b;"></div></div><div class="pct" style="color:#f59e0b;">29.6%</div></div>
+        <div class="bar-item"><div class="lbl">51-60 HP</div><div class="bg"><div class="fill" style="width:12.1%;background:#3b82f6;"></div></div><div class="pct" style="color:#3b82f6;">12.1%</div></div>
+        <div class="bar-item"><div class="lbl">Above 60 HP</div><div class="bg"><div class="fill" style="width:8.3%;background:#8b5cf6;"></div></div><div class="pct" style="color:#8b5cf6;">8.3%</div></div>
+      </div>
+    </div>
+    <div class="split-right">
+      <h3>HP Preference by State</h3>
+      <table>
+        <thead><tr><th>State</th><th>Share</th><th>Top HP</th><th>Avg Farm</th></tr></thead>
+        <tbody>
+          <tr><td>UP</td><td>19.2%</td><td>30-40 HP (48%)</td><td>0.93 ha</td></tr>
+          <tr><td>Rajasthan</td><td>13.4%</td><td>30-40 HP (52%)</td><td>1.26 ha</td></tr>
+          <tr><td>MP</td><td>11.6%</td><td>30-40 HP (51%)</td><td>1.02 ha</td></tr>
+          <tr><td>Maharashtra</td><td>9.8%</td><td>41-50 HP (34%)</td><td>1.44 ha</td></tr>
+          <tr><td>Punjab</td><td>7.2%</td><td>41-50 HP (39%)</td><td>3.62 ha</td></tr>
+          <tr><td>Haryana</td><td>6.9%</td><td>41-50 HP (38%)</td><td>2.21 ha</td></tr>
+        </tbody>
+      </table>
+      <div class="insight" style="margin-top:14px;font-size:9.5pt;">
+        <strong>Farm size = HP preference.</strong> Punjab (3.6 ha) &rarr; 41-50 HP dominant. Bihar (0.71 ha) &rarr; highest sub-30 HP share.
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════ SLIDE 6: DIAGNOSTICS ═══════ -->
+  <div class="slide slide-body">
+    <div class="slide-num">06 / 10</div>
+    <div class="slide-tag tag-diag">Diagnostic Analytics</div>
+    <h2>What <span>Drives</span> Tractor Demand?</h2>
+    <div class="grid-2">
+      <div>
+        <h3>Primary Drivers (ranked by impact)</h3>
+        <ul class="bullet-list amber">
+          <li><strong>SW Monsoon Rainfall</strong> — Pearson r = 0.51. Above-normal years drive +8 to +21% demand. Deficit years suppress -7 to -16%.</li>
+          <li><strong>Wheat/Paddy MSP</strong> — Hikes &gt;8% directly expand loan eligibility for 85M north Indian farmers. Zero-hike years show demand stagnation.</li>
+          <li><strong>Farm Income Index</strong> — Rose 87% from 2010 to 2024 (index basis). Each 10% income rise &rarr; ~4-5% demand increase.</li>
+          <li><strong>KCC / SMAM Credit</strong> — 70% of purchases are KCC-financed. Tightening NBFC credit killed FY2019-20 demand (-16%).</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Structural Factors by State</h3>
+        <table style="font-size:9pt;">
+          <thead><tr><th>Factor</th><th>Low HP States</th><th>High HP States</th></tr></thead>
+          <tbody>
+            <tr><td>Farm size</td><td>&lt;1.0 ha (UP, Bihar)</td><td>&gt;2.0 ha (Punjab)</td></tr>
+            <tr><td>Irrigation</td><td>30-55%</td><td>85-98%</td></tr>
+            <tr><td>Primary crop</td><td>Wheat, Mustard</td><td>Wheat, Rice (double)</td></tr>
+            <tr><td>SMAM subsidy</td><td>High (25-50%)</td><td>Low (&lt;10%)</td></tr>
+            <tr><td>HP preference</td><td>30-40 HP &gt; 50%</td><td>41-50 HP dominant</td></tr>
+          </tbody>
+        </table>
+        <div class="insight blue" style="margin-top:12px;font-size:9.5pt;">
+          <strong>Arable land is flat.</strong> 141-142 M ha for 15 years. ALL demand growth is mechanisation intensity — more tractors per hectare.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════ SLIDE 7: RAINFALL + MSP ════════ -->
+  <div class="slide slide-body">
+    <div class="slide-num">07 / 10</div>
+    <div class="slide-tag tag-diag">Diagnostic Analytics</div>
+    <h2>Rainfall &amp; MSP — <span>Correlation Evidence</span></h2>
+    <div class="grid-2">
+      <div>
+        <h3>Monsoon Impact on Sales</h3>
+        <table style="font-size:9pt;">
+          <thead><tr><th>Year</th><th>Rainfall</th><th>vs Normal</th><th>Sales Change</th></tr></thead>
+          <tbody>
+            <tr><td>FY2014-15</td><td>764mm</td><td>-12% (deficit)</td><td style="color:var(--red);">-10.1%</td></tr>
+            <tr><td>FY2015-16</td><td>761mm</td><td>-12% (deficit)</td><td style="color:var(--amber);">+2.2%</td></tr>
+            <tr><td>FY2016-17</td><td>863mm</td><td>-0.6%</td><td style="color:var(--green);">+11.7%</td></tr>
+            <tr><td>FY2020-21</td><td>958mm</td><td>+10% (above)</td><td style="color:var(--green);">+21.2%</td></tr>
+            <tr><td>FY2023-24</td><td>820mm</td><td>-5% (deficit)</td><td style="color:var(--red);">-1.5%</td></tr>
+          </tbody>
+        </table>
+        <div class="insight" style="font-size:9.5pt;margin-top:10px;">Pearson r = 0.51 between June-Sep rainfall and FY tractor sales. IMD forecasts 4 months ahead — a powerful demand signal.</div>
+      </div>
+      <div>
+        <h3>Wheat MSP Hike vs Demand Recovery</h3>
+        <table style="font-size:9pt;">
+          <thead><tr><th>Year</th><th>MSP (Rs/qtl)</th><th>Hike</th><th>Sales Change</th></tr></thead>
+          <tbody>
+            <tr><td>FY2017-18</td><td>Rs 1,735</td><td style="color:var(--green);">+13.8%</td><td style="color:var(--green);">+19.1%</td></tr>
+            <tr><td>FY2019-20</td><td>Rs 1,925</td><td>+4.6%</td><td style="color:var(--red);">-15.9% (NBFC)</td></tr>
+            <tr><td>FY2022-23</td><td>Rs 2,015</td><td style="color:var(--red);">0.0%</td><td style="color:var(--red);">-0.7%</td></tr>
+            <tr><td>FY2023-24</td><td>Rs 2,275</td><td style="color:var(--green);">+12.8%</td><td style="color:var(--amber);">-1.5%</td></tr>
+          </tbody>
+        </table>
+        <div class="insight amber" style="font-size:9.5pt;margin-top:10px;">MSP acts as a farm income floor. Large hikes expand KCC credit eligibility for 55M+ wheat farmers in UP/MP/Rajasthan — translating directly into tractor loan approvals.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════ SLIDE 8: FORECAST ══════════ -->
+  <div class="slide slide-body">
+    <div class="slide-num">08 / 10</div>
+    <div class="slide-tag tag-pred">Predictive Analytics</div>
+    <h2>Forecast <span>FY2026-27</span></h2>
+
+    <div class="forecast-row">
+      <div class="yr">FY2025-26</div>
+      <div class="val">9.35L</div>
+      <div class="rng">Range: 8.60L — 10.1L &nbsp;|&nbsp; Ensemble (Holt-Winters 45% + ARIMA 35% + Poly 20%)</div>
+      <div class="chg">+2.5% YoY</div>
+    </div>
+    <div class="forecast-row">
+      <div class="yr">FY2026-27</div>
+      <div class="val">9.52L</div>
+      <div class="rng">Range: 8.76L — 10.3L &nbsp;|&nbsp; Assumes normal monsoon + MSP hike &gt;6%</div>
+      <div class="chg">+1.8% YoY</div>
+    </div>
+
+    <div class="grid-2" style="margin-top:18px;">
+      <div>
+        <h3>HP Segment Shift Forecast</h3>
+        <table style="font-size:9pt;">
+          <thead><tr><th>Segment</th><th>FY24-25</th><th>FY26-27</th><th>Trend</th></tr></thead>
+          <tbody>
+            <tr><td>30-40 HP</td><td>44.8%</td><td>44.0%</td><td><span class="tag-pill down">Declining</span></td></tr>
+            <tr><td>41-50 HP</td><td>29.6%</td><td>30.0%</td><td><span class="tag-pill up">Rising</span></td></tr>
+            <tr><td>51-60 HP</td><td>12.1%</td><td>12.5%</td><td><span class="tag-pill up">Rising</span></td></tr>
+            <tr><td>Above 60 HP</td><td>8.3%</td><td>8.6%</td><td><span class="tag-pill up">Rising</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <h3>Model Accuracy</h3>
+        <table style="font-size:9pt;">
+          <thead><tr><th>Model</th><th>MAPE</th><th>Weight</th></tr></thead>
+          <tbody>
+            <tr><td>Holt-Winters</td><td>~6.8%</td><td>45%</td></tr>
+            <tr><td>ARIMA(1,1,1)</td><td>~7.4%</td><td>35%</td></tr>
+            <tr><td>Polynomial Reg</td><td>~9.1%</td><td>20%</td></tr>
+            <tr><td><strong>Ensemble</strong></td><td><strong>~7.1%</strong></td><td>—</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="insight blue" style="font-size:9.5pt;margin-top:10px;">DuckDB SQL window queries (MA3 + recency-weighted HP share) run directly on Gold-layer CSV exports — replicating results without a database server. MAPE ~5.2% on validation set.</div>
+  </div>
+
+  <!-- ═══════════════════════ SLIDE 9: EMERGING STATES ═══════ -->
+  <div class="slide slide-body">
+    <div class="slide-num">09 / 10</div>
+    <div class="slide-tag tag-pred">Predictive Analytics</div>
+    <h2>Emerging <span>High-Growth</span> States</h2>
+    <table>
+      <thead><tr><th>State</th><th>Current Share</th><th>Penetration (T/kha)</th><th>vs National Avg</th><th>CAGR Forecast</th><th>Key Driver</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Madhya Pradesh</strong></td><td>11.6%</td><td>4.1</td><td style="color:var(--red);">-36% below</td><td style="color:var(--green);font-weight:700;">+12.1%</td><td>Soybean MSP + PMKSY irrigation</td></tr>
+        <tr><td><strong>Telangana</strong></td><td>3.2%</td><td>3.2</td><td style="color:var(--red);">-50% below</td><td style="color:var(--green);font-weight:700;">+9.4%</td><td>Paddy-cotton shift + subsidy</td></tr>
+        <tr><td><strong>Odisha</strong></td><td>2.1%</td><td>1.8</td><td style="color:var(--red);">-72% below</td><td style="color:var(--green);font-weight:700;">+8.7%</td><td>PMGSY roads + FPO grants</td></tr>
+        <tr><td><strong>Chhattisgarh</strong></td><td>1.8%</td><td>1.4</td><td style="color:var(--red);">-78% below</td><td style="color:var(--green);font-weight:700;">+7.9%</td><td>FCI paddy hub expansion</td></tr>
+        <tr><td><strong>Jharkhand</strong></td><td>1.4%</td><td>1.1</td><td style="color:var(--red);">-83% below</td><td style="color:var(--green);font-weight:700;">+7.1%</td><td>JMGSSY mechanisation scheme</td></tr>
+      </tbody>
+    </table>
+    <div class="insight" style="margin-top:16px;">
+      These 5 states cover 18% of India's net sown area (25.4 M ha) but generate only 8.5% of tractor sales (~77K units). At national average penetration (6.4/kha), they would absorb ~163K units — a structural upside of <strong>86,000 additional units</strong> representing a 10-year demand opportunity for any OEM that builds early dealer presence.
+    </div>
+  </div>
+
+  <!-- ════════════════════════ SLIDE 10: RECOMMENDATIONS ═════ -->
+  <div class="slide slide-body">
+    <div class="slide-num">10 / 10</div>
+    <div class="slide-tag tag-presc">Prescriptive Analytics</div>
+    <h2>Key <span>Recommendations</span></h2>
+    <div class="grid-2">
+      <div>
+        <h3 style="color:var(--green);">Manufacturers &amp; Agritech</h3>
+        <ul class="bullet-list" style="font-size:9.5pt;">
+          <li>Launch 42-45 HP bridge product at Rs 4.5-5.5L with trade-in credit — unlocks 60-80K incremental units/year</li>
+          <li>Double dealer density in 5 emerging states (MP, Telangana, Odisha, CG, JH) by FY2027</li>
+          <li>Build IMD API + MSP-linked demand forecasting model to cut inventory cost 15-20%</li>
+          <li>Accelerate Africa/SE Asia exports — target Rs 35,000 Cr by FY2027 (from Rs 26,500 Cr)</li>
+        </ul>
+        <h3 style="color:var(--blue);margin-top:16px;">EV Tractor Roadmap</h3>
+        <ul class="bullet-list blue" style="font-size:9.5pt;">
+          <li>TCO parity with diesel achievable by FY2026-27 at Rs 12,000/kWh battery cost (post-FAME-III)</li>
+          <li>EV share to reach ~4.1% by FY2028-29 (~38,000 units)</li>
+          <li>OEM buy-back guarantee on battery essential for farmer adoption</li>
+        </ul>
+      </div>
+      <div>
+        <h3 style="color:var(--amber);">Policy</h3>
+        <ul class="bullet-list amber" style="font-size:9.5pt;">
+          <li>Scale CHC to 1 per 500 farmers (Rs 8,000 Cr SMAM expansion) — from current 1:4,000 ratio</li>
+          <li>HP-linked subsidy: zero SMAM for &lt;30HP in Punjab/Haryana; redirect to 41-50HP in emerging states</li>
+          <li>Extend FAME-III to agri tractors: Rs 1.5L/unit subsidy, 50K EV target by FY2027</li>
+          <li>Mandate HP × district tractor data reporting via VAHAN 4.0 for evidence-based policy</li>
+        </ul>
+        <h3 style="color:var(--purple);margin-top:16px;">Smallholder Farmers</h3>
+        <ul class="bullet-list purple" style="font-size:9.5pt;">
+          <li>FPO fleet model (Rs 920/hr) vs individual ownership (Rs 2,400/hr) — 2.6x cost saving</li>
+          <li>Crop-cycle EMI (2x/yr vs monthly) reduces default rate by 35%</li>
+          <li>App-based CHC rental (Rs 680/hr) best for sub-1 ha farmers</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /deck -->
+
+<!-- Navigation -->
+<div class="nav">
+  <button onclick="go(-1)">&#8592;</button>
+  <div class="slide-dots" id="dots"></div>
+  <div class="nav-count" id="count">1 / 10</div>
+  <button onclick="go(1)">&#8594;</button>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const dotsEl = document.getElementById('dots');
+  const countEl = document.getElementById('count');
+  let cur = 0;
+
+  slides.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.onclick = () => goTo(i);
+    dotsEl.appendChild(d);
+  });
+
+  function goTo(n) {
+    slides[cur].classList.remove('active');
+    document.querySelectorAll('.dot')[cur].classList.remove('active');
+    cur = (n + slides.length) % slides.length;
+    slides[cur].classList.add('active');
+    document.querySelectorAll('.dot')[cur].classList.add('active');
+    countEl.textContent = (cur + 1) + ' / ' + slides.length;
+  }
+
+  function go(dir) { goTo(cur + dir); }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown')  go(1);
+    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')    go(-1);
+  });
+</script>
+</body>
+</html>
