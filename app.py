@@ -800,12 +800,27 @@ elif page == "Predictive Analytics":
         ),
         customdata=list(zip(lower, upper)),
     ))
-    # Mark the train/test split
+    # Mark the train/test split with a shape (vline on categorical axis
+    # can fail in older Plotly builds, so we use add_shape instead)
     split_fy = india[india["year_start"]==2020]["fiscal_year"].values
     if len(split_fy):
-        fig_fc.add_vline(x=split_fy[0], line_dash="dot", line_color="#475569",
-                         annotation_text="Holdout →",
-                         annotation_font=dict(size=10, color="#94a3b8"))
+        try:
+            split_idx = list(india["fiscal_year"]).index(split_fy[0])
+            fig_fc.add_shape(
+                type="line",
+                x0=split_idx - 0.5, x1=split_idx - 0.5,
+                y0=0, y1=1,
+                xref="x", yref="paper",
+                line=dict(color="#475569", dash="dot", width=1.5),
+            )
+            fig_fc.add_annotation(
+                x=split_fy[0], y=1, yref="paper",
+                text="← Holdout", showarrow=False,
+                font=dict(size=10, color="#94a3b8"),
+                xanchor="right", yanchor="top",
+            )
+        except Exception:
+            pass  # skip the split marker if Plotly version doesn't support it
 
     fig_fc.update_layout(**chart_layout("India Tractor Sales Forecast — Holt-Winters / Poly / OLS", 380),
         yaxis_title="Units (Lakh)", xaxis_title="Fiscal Year")
