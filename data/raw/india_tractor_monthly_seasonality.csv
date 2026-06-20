@@ -1,0 +1,13 @@
+month,month_name,avg_share_pct,season_label,notes
+1,April,7.2,Rabi Harvest / Kharif Pre-sowing,Start of fiscal year; pre-monsoon sowing preparation
+2,May,9.1,Kharif Pre-sowing,Groundnut and cotton sowing; demand rises before monsoon
+3,June,11.8,Kharif Sowing (Monsoon onset),Peak buying as Kharif season begins; SW monsoon arrives
+4,July,12.4,Kharif Sowing (Peak),Peak monsoon; highest tractor demand of year
+5,August,10.9,Kharif Growing Season,Continued demand; field operations ongoing
+6,September,8.3,Kharif Late Season,Demand moderates; pre-Rabi preparation begins
+7,October,6.7,Rabi Pre-sowing,Rabi wheat/mustard sowing preparation
+8,November,7.1,Rabi Sowing,Rabi season sowing; moderate demand
+9,December,6.2,Rabi Growing Season,Lower demand; winter crops growing
+10,January,5.8,Rabi Growing Season,Lowest demand months; winter season
+11,February,6.4,Rabi Harvest Preparation,Slight uptick ahead of harvest
+12,March,8.1,Rabi Harvest,End of fiscal year; harvesting operations

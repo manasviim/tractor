@@ -1,0 +1,10 @@
+brand,parent_company,country_of_origin,market_share_2023_pct,hp_range_focus,key_models,notes
+Mahindra,Mahindra & Mahindra,India,42.5,20-75 HP,"265 DI, 575 DI, Arjun 605","Largest tractor maker globally by volume; dominant in India"
+TAFE,Tractors and Farm Equipment Ltd,India,13.2,30-60 HP,"45 DI, Sampo 245","AGCO joint venture; makes Massey Ferguson for India"
+Sonalika,International Tractors Ltd,India,10.8,20-120 HP,"DI 35, DI 745 III","Growing export presence; major in North India"
+John Deere,Deere & Co.,USA,9.7,35-120 HP,"5036D, 5075E","Premium segment; strong in Maharashtra and South India"
+Escorts,Escorts Kubota Ltd,India,9.1,25-90 HP,"Powertrac, Farmtrac","Kubota acquired majority stake in 2021"
+New Holland,CNH Industrial,USA/Italy,4.8,35-110 HP,"3230, 4710","Strong in Punjab and Haryana wheat belt"
+Force Motors,Force Motors Ltd,India,1.9,14-50 HP,"Balwan, Orchard","Niche player; orchard and hilly terrain tractors"
+VST Tillers,VST Tillers Tractors,India,1.4,11-22 HP,"MT270, Shakti 130","Power tiller and mini tractor specialist"
+Others,Various,Various,6.6,,,"Includes ACE, Powertrac, Kubota, etc."
