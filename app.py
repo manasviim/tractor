@@ -804,7 +804,8 @@ elif page == "Predictive Analytics":
     split_fy = india[india["year_start"]==2020]["fiscal_year"].values
     if len(split_fy):
         fig_fc.add_vline(x=split_fy[0], line_dash="dot", line_color="#475569",
-                         annotation_text="Holdout →", annotation_font_size=10)
+                         annotation_text="Holdout →",
+                         annotation_font=dict(size=10, color="#94a3b8"))
 
     fig_fc.update_layout(**chart_layout("India Tractor Sales Forecast — Holt-Winters / Poly / OLS", 380),
         yaxis_title="Units (Lakh)", xaxis_title="Fiscal Year")
