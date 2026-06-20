@@ -217,8 +217,41 @@ def load_data():
     })
 
     # Demand driver correlations: Pearson r vs India tractor sales (FY2010-FY2024)
-    india_10_24 = [520000,562000,543000,567000,510000,521000,582000,693000,
-                   874000,735000,891000,939000,932000,918000,912000]
+    # Use a reference DataFrame keyed on year_start so every merge is length-safe.
+    india_ref = pd.DataFrame({
+        "year_start": list(range(2010, 2025)),
+        "units_sold":  [520000,562000,543000,567000,510000,521000,582000,693000,
+                        874000,735000,891000,939000,932000,918000,912000],
+    })
+
+    def _safe_corr(x: np.ndarray, y: np.ndarray) -> float:
+        """Return Pearson r rounded to 3 dp; return 0.0 if arrays are too short."""
+        if len(x) < 3 or len(x) != len(y):
+            return 0.0
+        return round(float(np.corrcoef(x, y)[0, 1]), 3)
+
+    # Rainfall (2010-2024, 15 rows) — already aligned with india_ref
+    r_rainfall = _safe_corr(rainfall["rainfall_mm"].values,
+                            india_ref["units_sold"].values)
+
+    # Wheat MSP (2015-2024, 10 rows) — merge on year_start to align lengths
+    msp_merged_ref = india_ref.merge(wheat_msp[["year_start","wheat_msp"]], on="year_start")
+    r_msp = _safe_corr(msp_merged_ref["wheat_msp"].values,
+                       msp_merged_ref["units_sold"].values)
+
+    # Farm income index (2010-2024, 15 rows) — already aligned
+    r_income = _safe_corr(farm_income["farm_income_index"].values,
+                          india_ref["units_sold"].values)
+
+    # Tractors/1000 ha with 1-year lag: x[t-1] vs units[t]
+    r_mech = _safe_corr(arable["tractors_per_1000ha"].values[:-1],
+                        india_ref["units_sold"].values[1:])
+
+    # Farm equipment PPI (negate: higher price → lower demand)
+    ppi_14 = ppi[ppi["year"].isin(range(2010, 2025))]["ppi_value"].values
+    r_ppi = _safe_corr(ppi_14, india_ref["units_sold"].values)
+    r_ppi = round(-r_ppi, 3)   # flip sign: reported as "inverse" correlation
+
     driver_corrs = pd.DataFrame({
         "Indicator": [
             "SW Monsoon Rainfall",
@@ -227,18 +260,7 @@ def load_data():
             "Tractors/1000 ha (Lag 1yr)",
             "Farm Equip. PPI (inverse)",
         ],
-        "Pearson_r": [
-            round(np.corrcoef(rainfall["rainfall_mm"], india_10_24)[0,1], 3),
-            round(np.corrcoef(
-                wheat_msp[wheat_msp["year_start"].isin(range(2010,2024))]["wheat_msp"],
-                india_10_24[:-1])[0,1], 3) if len(wheat_msp[wheat_msp["year_start"].isin(range(2010,2024))]) > 0 else 0.62,
-            round(np.corrcoef(farm_income["farm_income_index"], india_10_24)[0,1], 3),
-            round(np.corrcoef(
-                arable["tractors_per_1000ha"][:-1],
-                india_10_24[1:])[0,1], 3),
-            round(-np.corrcoef(ppi[ppi["year"].isin(range(2010,2025))]["ppi_value"],
-                               india_10_24)[0,1], 3),
-        ],
+        "Pearson_r": [r_rainfall, r_msp, r_income, r_mech, r_ppi],
         "Direction": ["Positive","Positive","Positive","Positive (lag 1yr)","Negative"],
         "Lag_Note": [
             "Concurrent — kharif rainfall drives same-year sales",
